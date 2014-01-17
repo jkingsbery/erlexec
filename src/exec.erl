@@ -41,7 +41,7 @@
 
 %% External exports
 -export([
-    start/0, start/1, start_link/1, run/2, run_link/2, manage/2, send/2,
+    start/0, start/1, start_link/1, run/1, run/2, run_link/2, manage/2, send/2,
     which_children/0, kill/2, stop/1, ospid/1, pid/1, status/1, signal/1
 ]).
 
@@ -287,6 +287,11 @@ start(Options) when is_list(Options) ->
 run(Exe, Options) when is_list(Exe), is_list(Options) ->
     do_run({run, Exe, Options}, Options).
 
+-spec run(cmd()) -> 
+    {ok, pid(), ospid()} | {ok, [{stdout | stderr, [binary()]}]} | {error, any()}.
+run(Exe) when is_list(Exe) ->
+    run(Exe,[]).
+
 %%-------------------------------------------------------------------------
 %% @equiv run/2
 %% @doc Run an external program and link to the OsPid. If OsPid exits,
@@ -461,7 +466,7 @@ default() ->
 default(portexe) -> 
     % Get architecture (e.g. i386-linux)
     Dir = filename:dirname(filename:dirname(code:which(?MODULE))),
-    filename:join([Dir, "priv", erlang:system_info(system_architecture), "exec-port"]);
+    filename:join([Dir, "priv", "exec-port"]);
 default(Option) ->
     proplists:get_value(Option, default()).
 

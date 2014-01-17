@@ -25,7 +25,7 @@ lists:keymerge(1,
                     {"CXXFLAGS", "$CXXFLAGS -O0"}
                    ]},
 
-        {port_specs,[{filename:join(["priv", Arch, "exec-port"]), ["c_src/*.cpp"]}]},
+        {port_specs,[{filename:join(["priv", "exec-port"]), ["c_src/*.cpp"]}]},
         {edoc_opts, [{overview,     "src/overview.edoc"},
                      {title,        "The exec application"},
                      {includes,     ["include"]},
